@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //
 import 'package:lifeshare/utils/customDialogs.dart';
 import './home.dart';
+
+enum DonorOrNot { donor, seeker }
+DonorOrNot _val;
 
 class RegisterPage extends StatefulWidget {
   final FirebaseAuth appAuth;
@@ -33,13 +37,17 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<void> addData(_user) async {
     if (isLoggedIn()) {
+      // if(false) {
       Firestore.instance
           .collection('User Details')
           .document(_user['uid'])
-          .setData(_user)
-          .catchError((e) {
-        print(e);
-      });
+          .setData(_user);
+      if (_val == DonorOrNot.donor) {
+        Firestore.instance
+            .collection('Donor Details')
+            .document(_user['uid'])
+            .setData(_user);
+      }
     } else {
       print('You need to be logged In');
     }
@@ -195,7 +203,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           decoration: InputDecoration(
                             hintText: 'Phone',
                             icon: Icon(
-                              FontAwesomeIcons.user,
+                              FontAwesomeIcons.phone,
                               color: Color.fromARGB(1000, 221, 46, 68),
                             ),
                           ),
@@ -239,12 +247,52 @@ class _RegisterPageState extends State<RegisterPage> {
                               _selected,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
+                                fontSize: 18.0,
                                 color: Color.fromARGB(1000, 221, 46, 68),
                               ),
                             ),
                           ],
                         ),
+                      ),
+                      Column(
+                        children: <Widget>[
+                          ListTile(
+                            title: const Text(
+                              'Donor',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green,
+                              ),
+                            ),
+                            leading: Radio(
+                              value: DonorOrNot.donor,
+                              groupValue: _val,
+                              onChanged: (DonorOrNot value) {
+                                setState(() {
+                                  _val = value;
+                                });
+                              },
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text(
+                              'Seeker',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                              ),
+                            ),
+                            leading: Radio(
+                              value: DonorOrNot.seeker,
+                              groupValue: _val,
+                              onChanged: (DonorOrNot value) {
+                                setState(() {
+                                  _val = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 30.0,

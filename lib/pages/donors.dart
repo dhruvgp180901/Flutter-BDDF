@@ -24,7 +24,7 @@ class _DonorsPageState extends State<DonorsPage> {
 
   Future<Null> getDonors() async {
     await Firestore.instance
-        .collection('User Details')
+        .collection('Donor Details')
         .getDocuments()
         .then((docs) {
       if (docs.documents.isNotEmpty) {
