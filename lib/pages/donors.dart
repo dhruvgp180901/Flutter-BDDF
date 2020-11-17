@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-//
+import 'package:url_launcher/url_launcher.dart';
 import 'package:lifeshare/utils/customWaveIndicator.dart';
 
 class DonorsPage extends StatefulWidget {
@@ -11,6 +11,7 @@ class DonorsPage extends StatefulWidget {
 
 class _DonorsPageState extends State<DonorsPage> {
   List<String> donors = [];
+  Map<String,String> phones = {};
   List<String> bloodgroup = [];
   Widget _child;
 
@@ -30,6 +31,7 @@ class _DonorsPageState extends State<DonorsPage> {
         for (int i = 0; i < docs.documents.length; ++i) {
           donors.add(docs.documents[i].data['name']);
           bloodgroup.add(docs.documents[i].data['bloodgroup']);
+          phones[docs.documents[i].data['name']]=docs.documents[i].data['phone'];
         }
       }
     });
@@ -37,11 +39,11 @@ class _DonorsPageState extends State<DonorsPage> {
       _child = myWidget();
     });
   }
-
   Widget myWidget() {
+    
     return Scaffold(
       backgroundColor: Color.fromARGB(1000, 221, 46, 68),
-      appBar: AppBar(
+      appBar: AppBar(          
         elevation: 0.0,
         centerTitle: true,
         backgroundColor: Colors.transparent,
@@ -83,7 +85,7 @@ class _DonorsPageState extends State<DonorsPage> {
                         alignment: Alignment.centerRight,
                         child: IconButton(
                           icon: Icon(Icons.message),
-                          onPressed: () {},
+                          onPressed: () {launch(('sms://${int.parse(phones[donors[index]])}'));},
                           color: Color.fromARGB(1000, 221, 46, 68),
                         ),
                       ),
@@ -98,7 +100,7 @@ class _DonorsPageState extends State<DonorsPage> {
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.phone),
-                    onPressed: () {},
+                    onPressed: () {launch(('tel://${int.parse(phones[donors[index]])}'));},
                     color: Color.fromARGB(1000, 221, 46, 68),
                   ),
                 );

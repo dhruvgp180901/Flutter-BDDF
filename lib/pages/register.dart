@@ -19,6 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String _email;
   String _password;
   String _name;
+  String _phone;
   List<String> _bloodGroup = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
   String _selected = '';
   bool _categorySelected = false;
@@ -69,6 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
           'name': _name,
           'email': _email,
           'bloodgroup': _selected,
+          'phone': _phone,
         };
         addData(UserDetails).then((result) {
           print("User Added");
@@ -185,6 +187,22 @@ class _RegisterPageState extends State<RegisterPage> {
                               ? "Password field can't be empty"
                               : null,
                           onSaved: (value) => _password = value,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: 'Phone',
+                            icon: Icon(
+                              FontAwesomeIcons.user,
+                              color: Color.fromARGB(1000, 221, 46, 68),
+                            ),
+                          ),
+                          validator: (value) => value.isEmpty
+                              ? "Phone field can't be empty"
+                              : null,
+                          onSaved: (value) => _phone = value,
                         ),
                       ),
                       Container(
