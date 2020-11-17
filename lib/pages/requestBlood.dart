@@ -20,6 +20,7 @@ class _RequestBloodState extends State<RequestBlood> {
   String _qty;
   String _phone;
   String _address;
+  String _name;
   bool _categorySelected = false;
   DateTime selectedDate = DateTime.now();
   var formattedDate;
@@ -131,7 +132,7 @@ class _RequestBloodState extends State<RequestBlood> {
             color: Colors.white,
           ),
         ),
-         leading: IconButton(
+        leading: IconButton(
           icon: Icon(
             FontAwesomeIcons.reply,
             color: Colors.white,
@@ -194,6 +195,23 @@ class _RequestBloodState extends State<RequestBlood> {
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: 'Name',
+                            icon: Icon(
+                              FontAwesomeIcons.prescriptionBottle,
+                              color: Color.fromARGB(1000, 221, 46, 68),
+                            ),
+                          ),
+                          validator: (value) => value.isEmpty
+                              ? "Name field can't be empty"
+                              : null,
+                          onSaved: (value) => _name = value,
+                          keyboardType: TextInputType.name,
                         ),
                       ),
                       Padding(
@@ -263,6 +281,7 @@ class _RequestBloodState extends State<RequestBlood> {
                             'quantity': _qty,
                             'dueDate': formattedDate,
                             'phone': _phone,
+                            'name': _name,
                             'location': new GeoPoint(widget._lat, widget._lng),
                             'address': _address,
                           };

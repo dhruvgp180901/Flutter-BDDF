@@ -8,6 +8,7 @@ import 'package:lifeshare/pages/campaigns.dart';
 import './auth.dart';
 import './mapView.dart';
 import 'donors.dart';
+import 'requests.dart';
 //utils import
 import 'package:lifeshare/utils/customWaveIndicator.dart';
 
@@ -56,6 +57,7 @@ class _HomePageState extends State<HomePage> {
     _fetchUserInfo();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -65,6 +67,7 @@ class _HomePageState extends State<HomePage> {
     ));
     return _child;
   }
+
   Widget _myWidget() {
     return Scaffold(
       backgroundColor: Color.fromARGB(1000, 221, 46, 68),
@@ -137,7 +140,8 @@ class _HomePageState extends State<HomePage> {
                 color: Color.fromARGB(1000, 221, 46, 68),
               ),
               onTap: () {
-                //
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RequestsPage()));
               },
             ),
             ListTile(
