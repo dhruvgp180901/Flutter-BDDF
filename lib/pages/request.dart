@@ -112,9 +112,20 @@ class _RequestPageState extends State<RequestPage> {
                           ),
                           SizedBox(
                             height: 10,
-                            width: 2,
+                            width: 5,
                           ),
-                         
+
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              icon: Icon(Icons.message),
+                              onPressed: () {
+                                launch(
+                                    ('sms://${int.parse(phones[seekers[index]])}'));
+                              },
+                              color: Color.fromARGB(1000, 221, 46, 68),
+                            ),
+                          ),
                           Align(
                             alignment: Alignment.centerRight,
                             child: IconButton(

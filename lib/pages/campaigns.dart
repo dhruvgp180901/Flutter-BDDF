@@ -20,7 +20,7 @@ class CampaignsPage extends StatefulWidget {
 class _CampaignsPageState extends State<CampaignsPage> {
   FirebaseUser currentUser;
   final formkey = new GlobalKey<FormState>();
-  String _text, _name;
+  String _text, _name,_phone;
   @override
   void initState() {
     super.initState();
@@ -57,6 +57,7 @@ class _CampaignsPageState extends State<CampaignsPage> {
       });
     });
   }
+  
 
   Future<bool> dialogTrigger(BuildContext context) async {
     return showDialog(
@@ -207,9 +208,27 @@ class _CampaignsPageState extends State<CampaignsPage> {
                                   : null,
                               onSaved: (value) => _text = value,
                               keyboardType: TextInputType.multiline,
-                              maxLength: 120,
+                              maxLength: 500,
                             ),
                           ),
+                          Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: 'Phone Number',
+                            icon: Icon(
+                              FontAwesomeIcons.mobile,
+                              color: Color.fromARGB(1000, 221, 46, 68),
+                            ),
+                          ),
+                          validator: (value) => value.isEmpty
+                              ? "Phone Number field can't be empty"
+                              : null,
+                          onSaved: (value) => _phone = value,
+                          maxLength: 10,
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
                          Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
@@ -251,6 +270,7 @@ class _CampaignsPageState extends State<CampaignsPage> {
                           'content': _text,
                           'image': url,
                           'name': _name,
+                          'phone': _phone,
                         };
                         addData(campaignDetails).then((result) {
                           dialogTrigger(context);

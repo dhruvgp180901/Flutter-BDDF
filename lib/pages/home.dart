@@ -4,14 +4,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lifeshare/pages/campaigns.dart';
+import 'package:lifeshare/pages/loadcampaigns.dart';
 
 import 'package:lifeshare/pages/request.dart';
 //pages import
 import './auth.dart';
 import './mapView.dart';
+import 'campaigns.dart';
 import 'donors.dart';
 //utils import
 import 'package:lifeshare/utils/customWaveIndicator.dart';
+
+import 'loadcampaigns.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -151,7 +155,7 @@ class _HomePageState extends State<HomePage> {
               ),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CampaignsPage()));
+                    MaterialPageRoute(builder: (context) => LoadcampaignsPage()));
               },
             ),
             ListTile(
