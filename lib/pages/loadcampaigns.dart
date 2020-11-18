@@ -80,9 +80,11 @@ class _LoadcampaignsPageState extends State<LoadcampaignsPage> {
                   title: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(names[index]),
+                      Text(names[index],style: TextStyle(fontWeight: FontWeight.bold),),
+                      
                       Align(
                         alignment: Alignment.centerRight,
+                        
                         // child: IconButton(
                         //   icon: Icon(Icons.message),
                         //   onPressed: () {launch(('sms://1234'));},
@@ -91,7 +93,7 @@ class _LoadcampaignsPageState extends State<LoadcampaignsPage> {
                       ),
                       Text(contents[index]),
                       Align(
-                        alignment: Alignment.centerRight,
+                        alignment: Alignment.topLeft,
                         // child: IconButton(
                         //   icon: Icon(Icons.message),
                         //   onPressed: () {launch(('sms://1234'));},

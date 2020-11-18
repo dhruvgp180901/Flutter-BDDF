@@ -37,10 +37,13 @@ class _RequestPageState extends State<RequestPage> {
         for (int i = 0; i < docs.documents.length; ++i) {
           // print(docs.documents[i].data);
           seekers.add(docs.documents[i].data['name']);
+          due_date.add(docs.documents[i].data['dueDate']);
           bloodgroup.add(docs.documents[i].data['bloodGroup']);
           quantity.add(docs.documents[i].data['quantity']);
           quantity[i] = "Quantity : " + quantity[i] + " L";
-          phones[docs.documents[i].data['name']] = docs.documents[i].data['phone'];
+          phones[docs.documents[i].data['name']] =
+              docs.documents[i].data['phone'];
+          due_date[i] = "Due Date : " + due_date[i];
         }
       }
     });
@@ -86,27 +89,74 @@ class _RequestPageState extends State<RequestPage> {
               itemCount: seekers.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                    // width
-                    width: 100,
-                    alignment: Alignment.topLeft,
-                    child: ListTile(
-                      title: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(seekers[index],textAlign: TextAlign.left,),
+                  height: 100,
+                  // alignment: Alignment.topCenter,
 
-                            Text(quantity[index]),
-                          ],
-                      ),
-                          leading: CircleAvatar(
-                            child: Text(
-                              bloodgroup[index],
-                              style: TextStyle(color: Colors.white),
+                  child: Card(
+                    elevation: 10,
+                    child: ListTile(
+                      title: Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text(
+                                seekers[index],
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(quantity[index]),
+                              Text(due_date[index]),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                            width: 2,
+                          ),
+                         
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              icon: Icon(Icons.phone),
+                              onPressed: () {
+                                launch(
+                                    ('tel://${int.parse(phones[seekers[index]])}'));
+                              },
+                              color: Color.fromARGB(1000, 221, 46, 68),
                             ),
-                            backgroundColor: Color.fromARGB(1000, 221, 46, 68),
                           ),
+                        ],
+                      ),
+                      leading: Padding(
+                        padding: EdgeInsets.all(2),
+                        child: CircleAvatar(
+                          radius: 25,
+                          child: Padding(
+                            padding: EdgeInsets.all(5),
+                            child: FittedBox(
+                              child: Text(
+                                bloodgroup[index],
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
                           ),
-                    );
+                          backgroundColor: Color.fromARGB(1000, 221, 46, 68),
+                        ),
+                      ),
+                      // trailing: Container(
+                      //   width: 40,
+                      //   child: IconButton(
+                      //   icon: Icon(Icons.phone),
+                      //   onPressed: () {
+                      //     launch(
+                      //         ('tel://${int.parse(phones[seekers[index]])}'));
+                      //   },
+                      //   color: Color.fromARGB(1000, 221, 46, 68),
+                      // ),),
+                    ),
+                  ),
+                );
               },
             ),
           ),
