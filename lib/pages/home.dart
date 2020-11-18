@@ -4,11 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lifeshare/pages/campaigns.dart';
+
+import 'package:lifeshare/pages/request.dart';
 //pages import
 import './auth.dart';
 import './mapView.dart';
 import 'donors.dart';
-import 'requests.dart';
 //utils import
 import 'package:lifeshare/utils/customWaveIndicator.dart';
 
@@ -57,7 +58,6 @@ class _HomePageState extends State<HomePage> {
     _fetchUserInfo();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -67,7 +67,6 @@ class _HomePageState extends State<HomePage> {
     ));
     return _child;
   }
-
   Widget _myWidget() {
     return Scaffold(
       backgroundColor: Color.fromARGB(1000, 221, 46, 68),
@@ -141,7 +140,7 @@ class _HomePageState extends State<HomePage> {
               ),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RequestsPage()));
+                    MaterialPageRoute(builder: (context) => RequestPage()));
               },
             ),
             ListTile(

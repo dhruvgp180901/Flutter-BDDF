@@ -20,7 +20,6 @@ class _RequestBloodState extends State<RequestBlood> {
   String _qty;
   String _phone;
   String _address;
-  String _name;
   bool _categorySelected = false;
   DateTime selectedDate = DateTime.now();
   var formattedDate;
@@ -116,6 +115,16 @@ class _RequestBloodState extends State<RequestBlood> {
         placemark[0].postalCode.toString();
   }
 
+  Future<String> _getName(String uid) async{
+    DocumentSnapshot _snapshot = await Firestore.instance
+        .collection("User Details")
+        .document(uid)
+        .get();
+
+    final _userInfo = _snapshot.data;
+    return _userInfo['name'];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -201,23 +210,6 @@ class _RequestBloodState extends State<RequestBlood> {
                         padding: const EdgeInsets.all(18.0),
                         child: TextFormField(
                           decoration: InputDecoration(
-                            hintText: 'Name',
-                            icon: Icon(
-                              FontAwesomeIcons.prescriptionBottle,
-                              color: Color.fromARGB(1000, 221, 46, 68),
-                            ),
-                          ),
-                          validator: (value) => value.isEmpty
-                              ? "Name field can't be empty"
-                              : null,
-                          onSaved: (value) => _name = value,
-                          keyboardType: TextInputType.name,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: TextFormField(
-                          decoration: InputDecoration(
                             hintText: 'Quantity(L)',
                             icon: Icon(
                               FontAwesomeIcons.prescriptionBottle,
@@ -272,19 +264,21 @@ class _RequestBloodState extends State<RequestBlood> {
                         height: 30.0,
                       ),
                       RaisedButton(
-                        onPressed: () {
+                        onPressed: () async{
                           if (!formkey.currentState.validate()) return;
                           formkey.currentState.save();
+                          var x  = await _getName(currentUser.uid);
                           final Map<String, dynamic> BloodRequestDetails = {
                             'uid': currentUser.uid,
+                            'name': x,
                             'bloodGroup': _selected,
                             'quantity': _qty,
                             'dueDate': formattedDate,
                             'phone': _phone,
-                            'name': _name,
                             'location': new GeoPoint(widget._lat, widget._lng),
                             'address': _address,
                           };
+                          // print(currentUser.uid);
                           addData(BloodRequestDetails).then((result) {
                             dialogTrigger(context);
                           }).catchError((e) {

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
+import 'loadcampaigns.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 //pages import
@@ -71,7 +72,7 @@ class _CampaignsPageState extends State<CampaignsPage> {
                   formkey.currentState.reset();
                   Navigator.pop(context);
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => CampaignsPage()));
+                      MaterialPageRoute(builder: (context) => LoadcampaignsPage()));
                 },
                 child: Icon(
                   Icons.arrow_forward,
@@ -256,7 +257,10 @@ class _CampaignsPageState extends State<CampaignsPage> {
                         }).catchError((e) {
                           print(e);
                         });
+                        Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoadcampaignsPage()));
                       },
+                      
                       child: Text(
                         'POST',
                         style: TextStyle(color: Colors.white),
